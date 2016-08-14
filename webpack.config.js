@@ -10,21 +10,26 @@ module.exports = {
   },
   module: {
     loaders: [
-      //{ test: /\.css$/,  loader: "style!css" },
-      //{ test: /\.html$/, loader: 'raw'},
-      //{ test: /\.jpg|png|gif$/i, loader:'file'}
+      { test: /\.js$/, loader: 'babel', include:/js/, query:{presets:['es2015','react']}},
+      { test: /\.css$/,  loader: "style!css" },
+      { test: /\.jp(e)?g|png|gif$/, loader:'url?limit=8192&name=./build/[hash].[ext]'},
+      { test: /\.svg|ttf|eot|woff|woff2$/, loader:'file&name=./build/[hash].[ext]'}
     ]
   },
-  plugins: [],
+  plugins: [
+    new webpack.DefinePlugin({PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production')})
+  ],
   devtool: '#eval'
 };
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({PRODUCTION: JSON.stringify(true)}),
+      new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new webpack.NoErrorsPlugin()
   ]);
 }
 
