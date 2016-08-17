@@ -9,11 +9,14 @@ module.exports = {
     filename: 'index.js'
   },
   module: {
+    //preloaders:[
+    //  { test: /\.js$/, loader: 'eslint', include: /js/}
+    //],
     loaders: [
-      { test: /\.js$/, loader: 'babel', include:/js/, query:{presets:['es2015','react']}},
-      { test: /\.css$/,  loader: "style!css" },
-      { test: /\.jp(e)?g|png|gif$/, loader:'url?limit=8192&name=./build/[hash].[ext]'},
-      { test: /\.svg|ttf|eot|woff|woff2$/, loader:'file&name=./build/[hash].[ext]'}
+      { test: /\.js$/, loader: 'babel', include: /js/, query:{presets:['es2015','react']}}
+      //{ test: /\.css$/,  loader: "style!css" },
+      //{ test: /\.jp(e)?g|png|gif|svg|ttf|eot|woff|woff2$/, loader:'url?limit=8192&name=./build/[hash].[ext]'},
+      //{ test: /\.svg|ttf|eot|woff|woff2$/, loader:'file&name=./build/[hash].[ext]'}
     ]
   },
   plugins: [
